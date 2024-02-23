@@ -1,0 +1,47 @@
+﻿@model List<WeatherData> 
+@{
+    ViewData["Title"] = "Home Page";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+   /* $(document).ready(function () {
+        myfunction();
+    }); */
+    function myfunction() {
+       // var masp = $('#test_btn').val();
+        $.ajax({
+            url: '/Home/SendMessageToAPI',
+            //  url: '/Test/TestAjax',
+        //    data: { 'id_sp': masp },
+       //     dataType: 'json',
+            type: "post",
+            //cache: false,
+            success: function (response) {
+                $('#result_send').text(response);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#result_send').text("ERR");
+            }
+        });
+    }
+</script>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>@ViewBag.Status</p>
+    @if (Model != null)
+    {
+        <table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.date</td>
+                    <td>@item.TemperatureC</td>
+                    <td>@item.Summary</td>
+                </tr>
+            }
+        </table>
+    }
+    <button id="test_btn" onclick="myfunction();">Send Message</button>
+    <p id="result_send"></p>
+</div>

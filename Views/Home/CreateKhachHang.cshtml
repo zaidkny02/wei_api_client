@@ -1,0 +1,116 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model KhachHangModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        addKhachHang();
+    });
+    function addKhachHang() {
+        var formData = {};
+        $("#addform").serializeArray().map(function (item) {
+            formData[item.iMaKH] = item.iMaKH;
+            formData[item.sTenKH] = item.sTenKH;
+            formData[item.sDiachi] = item.sDiachi;
+            formData[item.sDienthoai] = item.sDienthoai;
+            formData[item.bGioitinh] = item.bGioitinh;
+            formData[item.iTuoi] = item.iTuoi;
+        });
+        var apiEndpoint = 'https://localhost:7156/Home';
+        var headers = {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Allow-Methods': 'DELETE, POST, GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+        };
+
+        var makh = $('#iMaKH').val();
+        var ten = $('#sTenKH').val();
+        var diachi = $('#sDiachi').val();
+        var sdt = $('#sDienthoai').val();
+        var gioitinh = $('#bGioitinh').val();
+        var tuoi = $('#iTuoi').val();
+
+        $.ajax({
+            url: apiEndpoint,
+            dataType: 'json',
+            type: 'POST',
+            headers: headers,
+         //   data: JSON.stringify(formData),
+            data: {
+                'iMaKH': makh,
+                'sTenKH': ten,
+                'sDiachi': diachi,
+                'sDienthoai': sdt,
+                'bGioitinh': gioitinh,
+                'iTuoi': tuoi,
+            },
+            success: function (data) {
+                // Handle the API response data
+                console.log('Model successfully posted to the API:', data);
+            },
+            error: function (error) {
+                // Handle errors
+                console.error('Error:', error);
+            }
+        });
+    }
+</script>
+<h1>Create</h1>
+
+<h4>KhachHang</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="addform" asp-action="CreateKhachHang" asp-controller="Home" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="iMaKH" class="control-label"></label>
+                <input asp-for="iMaKH" class="form-control" />
+                <span asp-validation-for="iMaKH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sTenKH" class="control-label"></label>
+                <input asp-for="sTenKH" class="form-control" />
+                <span asp-validation-for="sTenKH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sDiachi" class="control-label"></label>
+                <input asp-for="sDiachi" class="form-control" />
+                <span asp-validation-for="sDiachi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sDienthoai" class="control-label"></label>
+                <input asp-for="sDienthoai" class="form-control" />
+                <span asp-validation-for="sDienthoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="bGioitinh" class="control-label"></label>
+                <select asp-for="bGioitinh" class="control-select">
+                    <option value="false">Nam</option>
+                    <option value="true">Nữ</option>
+                </select>
+                <span asp-validation-for="bGioitinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="iTuoi" class="control-label"></label>
+                <input asp-for="iTuoi" class="form-control" />
+                <span asp-validation-for="iTuoi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="KhachHang">Back to List</a>
+</div>

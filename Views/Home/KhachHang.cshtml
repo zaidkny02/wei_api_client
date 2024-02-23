@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<KhachHangModel>
+
+@{
+    ViewData["Title"] = "Trang Khách Hàng";
+    var message = TempData["Message"] as string;
+}
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-info">
+        @message
+    </div>
+}
+<div style="row">
+    <div style="display:-webkit-inline-box">
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CreateKhachHang">CreateKH</a>
+    </div>
+    <p>@ViewBag.Status</p>
+    @if (Model != null)
+    {
+        <table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.iMaKH</td>
+                    <td>@item.sTenKH</td>
+                    <td>@item.sDiachi</td>
+                    <td>@item.sDienthoai</td>
+                    <td>@item.bGioitinh</td>
+                    <td>@item.iTuoi</td>
+                    <td><a class="nav-link" asp-area="" asp-controller="Home" asp-action="ChiTietKH" asp-route-id="@item.iMaKH">Detail</a></td>
+                </tr>
+            }
+        </table>
+    }
+</div>
